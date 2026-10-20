@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+    <book id="1">
+        <title>JavaScript高级程序设计</title>
+        <author>Nicholas C. Zakas</author>
+        <year>2020</year>
+        <price>99.00</price>
+        <category>计算机技术</category>
+    </book>
+    <book id="2">
+        <title>HTML与CSS：设计与构建网站</title>
+        <author>Jon Duckett</author>
+        <year>2018</year>
+        <price>89.00</price>
+        <category>网页设计</category>
+    </book>
+    <book id="3">
+        <title>深入理解计算机系统</title>
+        <author>Randal E. Bryant</author>
+        <year>2016</year>
+        <price>139.00</price>
+        <category>计算机基础</category>
+    </book>
+    <book id="4">
+        <title>代码整洁之道</title>
+        <author>Robert C. Martin</author>
+        <year>2019</year>
+        <price>59.00</price>
+        <category>软件工程</category>
+    </book>
+    <book id="5">
+        <title>人月神话</title>
+        <author>Frederick P. Brooks Jr.</author>
+        <year>2015</year>
+        <price>45.00</price>
+        <category>项目管理</category>
+    </book>
+    <book id="6">
+        <title>重构：改善既有代码的设计</title>
+        <author>Martin Fowler</author>
+        <year>2019</year>
+        <price>129.00</price>
+        <category>软件工程</category>
+    </book>
+</catalog>

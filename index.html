@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4 - XML & JSON 数据展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2em;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .badge {
+            background: #667eea;
+            color: #fff;
+            font-size: 0.7em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: normal;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+        .card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .card .meta {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.8;
+        }
+        .price {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .tag {
+            display: inline-block;
+            background: #eef0ff;
+            color: #667eea;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 6px;
+            margin-top: 6px;
+        }
+        .user-card {
+            border-left-color: #764ba2;
+        }
+        .user-card .tag {
+            background: #f5eef8;
+            color: #764ba2;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        .info-label {
+            color: #999;
+        }
+        .info-value {
+            color: #333;
+            font-weight: 500;
+        }
+        .error {
+            background: #fff3f3;
+            color: #e74c3c;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        footer {
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lab 4: XML & JSON 数据展示</h1>
+
+        <!-- XML 书籍目录 -->
+        <div class="section">
+            <h2>📚 书籍目录 (XML) <span class="badge">books.xml</span></h2>
+            <div id="books-container" class="card-grid">
+                <div class="error">正在加载书籍数据...</div>
+            </div>
+        </div>
+
+        <!-- JSON 用户配置 -->
+        <div class="section">
+            <h2>👥 用户配置 (JSON) <span class="badge">users.json</span></h2>
+            <div id="users-container" class="card-grid">
+                <div class="error">正在加载用户数据...</div>
+            </div>
+        </div>
+
+        <footer>
+            邓逸凡 247071 | 刘子安 247109 | Lab 4 XML & JSON
+        </footer>
+    </div>
+
+    <script>
+        // 加载并展示 XML 数据
+        async function loadBooks() {
+            try {
+                const response = await fetch('books.xml');
+                const text = await response.text();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(text, 'text/xml');
+
+                // 检查解析错误
+                const parseError = xml.querySelector('parsererror');
+                if (parseError) throw new Error('XML 解析失败');
+
+                const books = xml.querySelectorAll('book');
+                const container = document.getElementById('books-container');
+                container.innerHTML = '';
+
+                books.forEach(book => {
+                    const title = book.querySelector('title').textContent;
+                    const author = book.querySelector('author').textContent;
+                    const year = book.querySelector('year').textContent;
+                    const price = book.querySelector('price').textContent;
+                    const category = book.querySelector('category').textContent;
+
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <h3>${title}</h3>
+                        <div class="meta">
+                            <div class="info-row">
+                                <span class="info-label">作者</span>
+                                <span class="info-value">${author}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">出版年份</span>
+                                <span class="info-value">${year}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">价格</span>
+                                <span class="price">¥${price}</span>
+                            </div>
+                            <span class="tag">${category}</span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                document.getElementById('books-container').innerHTML =
+                    '<div class="error">XML 数据加载失败: ' + err.message + '</div>';
+            }
+        }
+
+        // 加载并展示 JSON 数据
+        async function loadUsers() {
+            try {
+                const response = await fetch('users.json');
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                const users = await response.json();
+
+                const container = document.getElementById('users-container');
+                container.innerHTML = '';
+
+                users.forEach(user => {
+                    const card = document.createElement('div');
+                    card.className = 'card user-card';
+                    card.innerHTML = `
+                        <h3>${user.name}</h3>
+                        <div class="meta">
+                            <div class="info-row">
+                                <span class="info-label">年龄</span>
+                                <span class="info-value">${user.age} 岁</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">邮箱</span>
+                                <span class="info-value">${user.email}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">城市</span>
+                                <span class="info-value">${user.address.city}</span>
+                            </div>
+                            <div>${user.interests.map(i => `<span class="tag">${i}</span>`).join('')}</div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                document.getElementById('users-container').innerHTML =
+                    '<div class="error">JSON 数据加载失败: ' + err.message + '</div>';
+            }
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBooks();
+            loadUsers();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+[
+    {
+        "name": "邓逸凡",
+        "age": 20,
+        "email": "dengyifan@example.com",
+        "address": {
+            "city": "廊坊",
+            "street": "大学城文化路88号",
+            "zipcode": "065000"
+        },
+        "interests": ["编程", "传感器技术", "篮球", "音乐"]
+    },
+    {
+        "name": "刘子安",
+        "age": 21,
+        "email": "liuzian@example.com",
+        "address": {
+            "city": "廊坊",
+            "street": "大学城博学路12号",
+            "zipcode": "065000"
+        },
+        "interests": ["嵌入式系统", "足球", "摄影", "旅行"]
+    },
+    {
+        "name": "张三",
+        "age": 22,
+        "email": "zhangsan@example.com",
+        "address": {
+            "city": "北京",
+            "street": "海淀区学院路30号",
+            "zipcode": "100083"
+        },
+        "interests": ["人工智能", "阅读", "电影", "骑行"]
+    },
+    {
+        "name": "李四",
+        "age": 19,
+        "email": "lisi@example.com",
+        "address": {
+            "city": "天津",
+            "street": "南开区卫津路92号",
+            "zipcode": "300072"
+        },
+        "interests": ["网络安全", "游戏开发", "动漫", "跑步"]
+    }
+]
